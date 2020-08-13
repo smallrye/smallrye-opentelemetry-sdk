@@ -11,7 +11,7 @@ import io.micrometer.core.instrument.Tags;
 import io.opentelemetry.common.Labels;
 import io.smallrye.opentelemetry.sdk.metrics.utils.LabelConverter;
 
-public class LabelConverterTest {
+class LabelConverterTest {
     @Test
     void testToTagsWithNoLabels() {
         Tags tags = LabelConverter.toTags(Labels.empty());

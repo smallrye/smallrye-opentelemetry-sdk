@@ -11,7 +11,7 @@ import io.opentelemetry.OpenTelemetry;
 import io.opentelemetry.context.propagation.ContextPropagators;
 import io.opentelemetry.context.propagation.HttpTextFormat;
 
-public class OpenTelemetryTest {
+class OpenTelemetryTest {
 
     @Test
     void testDefaultPropagator() {

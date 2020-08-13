@@ -6,7 +6,7 @@ import io.opentelemetry.OpenTelemetry;
 import io.opentelemetry.trace.DefaultTracerProvider;
 import io.opentelemetry.trace.TracerProvider;
 
-public class OpenTelemetryTracingTest {
+class OpenTelemetryTracingTest {
 
     //TODO Uncomment when tracer present
     //    @Test

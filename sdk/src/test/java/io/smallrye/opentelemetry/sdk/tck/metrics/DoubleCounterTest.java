@@ -19,7 +19,7 @@ import io.opentelemetry.common.Labels;
 import io.opentelemetry.metrics.DoubleCounter;
 import io.smallrye.opentelemetry.sdk.metrics.OpenTelemetryMeterRegistry;
 
-public class DoubleCounterTest {
+class DoubleCounterTest {
     private static SimpleMeterRegistry collector;
 
     @BeforeAll

@@ -6,7 +6,7 @@ import io.opentelemetry.OpenTelemetry;
 import io.opentelemetry.correlationcontext.CorrelationContextManager;
 import io.opentelemetry.correlationcontext.DefaultCorrelationContextManager;
 
-public class OpenTelemetryCorrelationContextTest {
+class OpenTelemetryCorrelationContextTest {
 
     //TODO Uncomment when correlation context present
     //    @Test
