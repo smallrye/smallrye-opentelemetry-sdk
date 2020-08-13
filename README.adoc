@@ -14,6 +14,13 @@ that implements the https://github.com/open-telemetry/opentelemetry-java/tree/ma
 This project will utilize https://micrometer.io/[Micrometer] for the "heavy lifting" for metrics,
 and provide a thin wrapper to map between OpenTelemetry and Micrometer concepts.
 
+=== Community
+
+Any discussion related to this implementation should be done in the https://groups.google.com/forum/#!forum/smallrye[SmallRye Google Group].
+
+However, any discussion related to the https://github.com/open-telemetry/community#cross-language-specification[OpenTelemetry Specification]
+or https://github.com/open-telemetry/community#java-sdk[OpenTelemetry Java] should occur within their respective communities.
+
 === Instructions
 
 Compile and test the project:
