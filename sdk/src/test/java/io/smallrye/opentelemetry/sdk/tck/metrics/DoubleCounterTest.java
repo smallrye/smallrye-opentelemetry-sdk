@@ -1,6 +1,7 @@
 package io.smallrye.opentelemetry.sdk.tck.metrics;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Iterator;
 import java.util.List;
@@ -66,6 +67,58 @@ class DoubleCounterTest {
         assertThat(measure.getValue()).isEqualTo(2.0);
 
         assertThat(iterator.hasNext()).isFalse();
+    }
+
+    @Test
+    void testWithUnit() {
+        final String counterName = "my-counter-unit";
+        final String counterDescription = "Description of my-counter-unit";
+
+        DoubleCounter doubleCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
+                .doubleCounterBuilder(counterName)
+                .setDescription(counterDescription)
+                .setUnit("2")
+                .build();
+
+        doubleCounter.add(3, Labels.empty());
+
+        List<Meter> meters = collector.getMeters();
+        assertThat(meters).isNotNull();
+        assertThat(meters.size()).isEqualTo(1);
+
+        Meter meter = meters.get(0);
+        assertThat(meter).isNotNull();
+        assertThat(meter.getId()).isNotNull();
+        assertThat(meter.getId().getName()).isEqualTo(counterName);
+        assertThat(meter.getId().getDescription()).isEqualTo(counterDescription);
+        assertThat(meter.getId().getBaseUnit()).isEqualTo("2");
+        assertThat(meter.getId().getTags()).isEmpty();
+
+        Iterator<Measurement> iterator = meter.measure().iterator();
+        assertThat(iterator.hasNext()).isTrue();
+
+        Measurement measure = iterator.next();
+        assertThat(measure.getStatistic()).isEqualTo(Statistic.COUNT);
+        assertThat(measure.getValue()).isEqualTo(3.0);
+
+        assertThat(iterator.hasNext()).isFalse();
+    }
+
+    @Test
+    void testIncrementFail() {
+        final String counterName = "my-counter-fail";
+        final String counterDescription = "Description of my-counter-fail";
+
+        DoubleCounter doubleCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
+                .doubleCounterBuilder(counterName)
+                .setDescription(counterDescription)
+                .build();
+
+        assertThrows(IllegalArgumentException.class, () -> doubleCounter.add(-2, Labels.empty()));
+
+        List<Meter> meters = collector.getMeters();
+        assertThat(meters).isNotNull();
+        assertThat(meters.size()).isEqualTo(0);
     }
 
     @Test
