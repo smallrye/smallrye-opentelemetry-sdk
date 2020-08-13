@@ -19,10 +19,10 @@ import io.micrometer.core.instrument.Statistic;
 import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
 import io.opentelemetry.OpenTelemetry;
 import io.opentelemetry.common.Labels;
-import io.opentelemetry.metrics.DoubleCounter;
+import io.opentelemetry.metrics.LongCounter;
 import io.smallrye.opentelemetry.sdk.metrics.OpenTelemetryMeterRegistry;
 
-class DoubleCounterTest {
+class LongCounterTest {
     private static SimpleMeterRegistry collector;
 
     @BeforeAll
@@ -39,55 +39,55 @@ class DoubleCounterTest {
 
     @Test
     void testWithNoLabels() {
-        final String counterName = "my-counter-no-labels";
-        final String counterDescription = "Description of my-counter-no-labels";
+        final String counterName = "long-counter-no-labels";
+        final String counterDescription = "Description of long-counter-no-labels";
 
-        DoubleCounter doubleCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
-                .doubleCounterBuilder(counterName)
+        LongCounter longCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
+                .longCounterBuilder(counterName)
                 .setDescription(counterDescription)
                 .build();
 
-        doubleCounter.add(2.1, Labels.empty());
+        longCounter.add(6, Labels.empty());
 
         List<Meter> meters = collector.getMeters();
         assertThat(meters).isNotNull();
         assertThat(meters.size()).isEqualTo(1);
 
-        verifyMeter(meters.get(0), counterName, counterDescription, "1", 0, null, null, 2.1);
+        verifyMeter(meters.get(0), counterName, counterDescription, "1", 0, null, null, 6.0);
     }
 
     @Test
     void testWithUnit() {
-        final String counterName = "my-counter-unit";
-        final String counterDescription = "Description of my-counter-unit";
+        final String counterName = "long-counter-unit";
+        final String counterDescription = "Description of long-counter-unit";
 
-        DoubleCounter doubleCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
-                .doubleCounterBuilder(counterName)
+        LongCounter longCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
+                .longCounterBuilder(counterName)
                 .setDescription(counterDescription)
                 .setUnit("2")
                 .build();
 
-        doubleCounter.add(3.87, Labels.empty());
+        longCounter.add(23, Labels.empty());
 
         List<Meter> meters = collector.getMeters();
         assertThat(meters).isNotNull();
         assertThat(meters.size()).isEqualTo(1);
 
-        verifyMeter(meters.get(0), counterName, counterDescription, "2", 0, null, null, 3.87);
+        verifyMeter(meters.get(0), counterName, counterDescription, "2", 0, null, null, 23.0);
     }
 
     @Test
     void testIncrementFail() {
-        final String counterName = "my-counter-fail";
-        final String counterDescription = "Description of my-counter-fail";
+        final String counterName = "long-counter-fail";
+        final String counterDescription = "Description of long-counter-fail";
 
-        DoubleCounter doubleCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
-                .doubleCounterBuilder(counterName)
+        LongCounter longCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
+                .longCounterBuilder(counterName)
                 .setDescription(counterDescription)
                 .build();
 
         Labels labels = Labels.empty();
-        assertThrows(IllegalArgumentException.class, () -> doubleCounter.add(-2, labels));
+        assertThrows(IllegalArgumentException.class, () -> longCounter.add(-43, labels));
 
         List<Meter> meters = collector.getMeters();
         assertThat(meters).isNotNull();
@@ -96,63 +96,63 @@ class DoubleCounterTest {
 
     @Test
     void testWithLabelsOnConstruct() {
-        final String counterName = "my-counter-labels-construct";
-        final String counterDescription = "Description of my-counter-labels-construct";
+        final String counterName = "long-counter-labels-construct";
+        final String counterDescription = "Description of long-counter-labels-construct";
         final String labelKey = "myKey";
         final String labelValue = "myValue";
 
-        DoubleCounter doubleCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
-                .doubleCounterBuilder(counterName)
+        LongCounter longCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
+                .longCounterBuilder(counterName)
                 .setDescription(counterDescription)
                 .setConstantLabels(Labels.of(labelKey, labelValue))
                 .build();
 
-        doubleCounter.add(4.3, Labels.empty());
+        longCounter.add(4, Labels.empty());
 
         List<Meter> meters = collector.getMeters();
         assertThat(meters).isNotNull();
         assertThat(meters.size()).isEqualTo(1);
 
-        verifyMeter(meters.get(0), counterName, counterDescription, "1", 1, labelKey, labelValue, 4.3);
+        verifyMeter(meters.get(0), counterName, counterDescription, "1", 1, labelKey, labelValue, 4.0);
     }
 
     @Test
     void testWithLabelsOnIncrement() {
-        final String counterName = "my-counter-labels-increment";
-        final String counterDescription = "Description of my-counter-labels-increment";
+        final String counterName = "long-counter-labels-increment";
+        final String counterDescription = "Description of long-counter-labels-increment";
         final String labelKey = "myKey";
         final String labelValue = "myValue";
 
-        DoubleCounter doubleCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
-                .doubleCounterBuilder(counterName)
+        LongCounter longCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
+                .longCounterBuilder(counterName)
                 .setDescription(counterDescription)
                 .build();
 
-        doubleCounter.add(6.4, Labels.of(labelKey, labelValue));
+        longCounter.add(6, Labels.of(labelKey, labelValue));
 
         List<Meter> meters = collector.getMeters();
         assertThat(meters).isNotNull();
         assertThat(meters.size()).isEqualTo(1);
 
-        verifyMeter(meters.get(0), counterName, counterDescription, "1", 1, labelKey, labelValue, 6.4);
+        verifyMeter(meters.get(0), counterName, counterDescription, "1", 1, labelKey, labelValue, 6.0);
     }
 
     @Test
     void testWithLabelsOnConstructAndIncrement() {
-        final String counterName = "my-counter-labels-construct-increment";
-        final String counterDescription = "Description of my-counter-labels-construct-increment";
+        final String counterName = "long-counter-labels-construct-increment";
+        final String counterDescription = "Description of long-counter-labels-construct-increment";
         final String labelKey1 = "myKey1";
         final String labelValue1 = "myValue1";
         final String labelKey2 = "myKey2";
         final String labelValue2 = "myValue2";
 
-        DoubleCounter doubleCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
-                .doubleCounterBuilder(counterName)
+        LongCounter longCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
+                .longCounterBuilder(counterName)
                 .setDescription(counterDescription)
                 .setConstantLabels(Labels.of(labelKey1, labelValue1))
                 .build();
 
-        doubleCounter.add(4.5, Labels.of(labelKey2, labelValue2));
+        longCounter.add(45, Labels.of(labelKey2, labelValue2));
 
         List<Meter> meters = collector.getMeters();
         assertThat(meters).isNotNull();
@@ -178,109 +178,109 @@ class DoubleCounterTest {
 
         Measurement measure = iterator.next();
         assertThat(measure.getStatistic()).isEqualTo(Statistic.COUNT);
-        assertThat(measure.getValue()).isEqualTo(4.5);
+        assertThat(measure.getValue()).isEqualTo(45.0);
 
         assertThat(iterator.hasNext()).isFalse();
     }
 
     @Test
     void testMultiIncrementWithNoLabels() {
-        final String counterName = "my-counter-multi-increment-no-labels";
-        final String counterDescription = "Description of my-counter-multi-increment-no-labels";
+        final String counterName = "long-counter-multi-increment-no-labels";
+        final String counterDescription = "Description of long-counter-multi-increment-no-labels";
 
-        DoubleCounter doubleCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
-                .doubleCounterBuilder(counterName)
+        LongCounter longCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
+                .longCounterBuilder(counterName)
                 .setDescription(counterDescription)
                 .build();
 
-        doubleCounter.add(1.5, Labels.empty());
+        longCounter.add(15, Labels.empty());
 
         List<Meter> meters = collector.getMeters();
         assertThat(meters).isNotNull();
         assertThat(meters.size()).isEqualTo(1);
 
-        verifyMeter(meters.get(0), counterName, counterDescription, "1", 0, null, null, 1.5);
+        verifyMeter(meters.get(0), counterName, counterDescription, "1", 0, null, null, 15.0);
 
-        doubleCounter.add(4.2, Labels.empty());
+        longCounter.add(42, Labels.empty());
 
         meters = collector.getMeters();
         assertThat(meters).isNotNull();
         assertThat(meters.size()).isEqualTo(1);
 
-        verifyMeter(meters.get(0), counterName, counterDescription, "1", 0, null, null, 5.7);
+        verifyMeter(meters.get(0), counterName, counterDescription, "1", 0, null, null, 57.0);
     }
 
     @Test
     void testMultiIncrementWithLabels() {
-        final String counterName = "my-counter-multi-increment-with-labels";
-        final String counterDescription = "Description of my-counter-multi-increment-with-labels";
+        final String counterName = "long-counter-multi-increment-with-labels";
+        final String counterDescription = "Description of long-counter-multi-increment-with-labels";
         final String labelKey = "myKey";
         final String labelValue = "myValue";
 
-        DoubleCounter doubleCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
-                .doubleCounterBuilder(counterName)
+        LongCounter longCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
+                .longCounterBuilder(counterName)
                 .setDescription(counterDescription)
                 .setConstantLabels(Labels.of(labelKey, labelValue))
                 .build();
 
-        doubleCounter.add(1.5, Labels.empty());
+        longCounter.add(15, Labels.empty());
 
         List<Meter> meters = collector.getMeters();
         assertThat(meters).isNotNull();
         assertThat(meters.size()).isEqualTo(1);
 
-        verifyMeter(meters.get(0), counterName, counterDescription, "1", 1, labelKey, labelValue, 1.5);
+        verifyMeter(meters.get(0), counterName, counterDescription, "1", 1, labelKey, labelValue, 15.0);
 
-        doubleCounter.add(4.2, Labels.empty());
+        longCounter.add(42, Labels.empty());
 
         meters = collector.getMeters();
         assertThat(meters).isNotNull();
         assertThat(meters.size()).isEqualTo(1);
 
-        verifyMeter(meters.get(0), counterName, counterDescription, "1", 1, labelKey, labelValue, 5.7);
+        verifyMeter(meters.get(0), counterName, counterDescription, "1", 1, labelKey, labelValue, 57.0);
     }
 
     @Test
     void testBind() {
-        final String counterName = "my-counter-binding-no-labels";
-        final String counterDescription = "Description of my-counter-binding-no-labels";
+        final String counterName = "long-counter-binding-no-labels";
+        final String counterDescription = "Description of long-counter-binding-no-labels";
         final String labelKey = "myKey";
         final String labelValue = "myValue";
 
-        DoubleCounter doubleCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
-                .doubleCounterBuilder(counterName)
+        LongCounter longCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
+                .longCounterBuilder(counterName)
                 .setDescription(counterDescription)
                 .build();
 
-        DoubleCounter.BoundDoubleCounter boundDoubleCounter = doubleCounter.bind(Labels.of(labelKey, labelValue));
-        boundDoubleCounter.add(3.1);
-        boundDoubleCounter.unbind();
+        LongCounter.BoundLongCounter boundLongCounter = longCounter.bind(Labels.of(labelKey, labelValue));
+        boundLongCounter.add(98);
+        boundLongCounter.unbind();
 
         List<Meter> meters = collector.getMeters();
         assertThat(meters).isNotNull();
         assertThat(meters.size()).isEqualTo(1);
 
-        verifyMeter(meters.get(0), counterName, counterDescription, "1", 1, labelKey, labelValue, 3.1);
+        verifyMeter(meters.get(0), counterName, counterDescription, "1", 1, labelKey, labelValue, 98.0);
     }
 
     @Test
     void testBindWithCommonLabels() {
-        final String counterName = "my-counter-binding-common-labels";
-        final String counterDescription = "Description of my-counter-binding-common-labels";
+        final String counterName = "long-counter-binding-common-labels";
+        final String counterDescription = "Description of long-counter-binding-common-labels";
         final String labelKey1 = "myKey1";
         final String labelValue1 = "myValue1";
         final String labelKey2 = "myKey2";
         final String labelValue2 = "myValue2";
 
-        DoubleCounter doubleCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
-                .doubleCounterBuilder(counterName)
+        LongCounter longCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
+                .longCounterBuilder(counterName)
                 .setDescription(counterDescription)
                 .setConstantLabels(Labels.of(labelKey1, labelValue1))
                 .build();
 
-        DoubleCounter.BoundDoubleCounter boundDoubleCounter = doubleCounter.bind(Labels.of(labelKey2, labelValue2));
-        boundDoubleCounter.add(3.1);
-        boundDoubleCounter.unbind();
+        LongCounter.BoundLongCounter boundLongCounter = longCounter.bind(Labels.of(labelKey2, labelValue2));
+        boundLongCounter.add(31);
+        boundLongCounter.unbind();
 
         List<Meter> meters = collector.getMeters();
         assertThat(meters).isNotNull();
@@ -306,21 +306,21 @@ class DoubleCounterTest {
 
         Measurement measure = iterator.next();
         assertThat(measure.getStatistic()).isEqualTo(Statistic.COUNT);
-        assertThat(measure.getValue()).isEqualTo(3.1);
+        assertThat(measure.getValue()).isEqualTo(31.0);
 
         assertThat(iterator.hasNext()).isFalse();
     }
 
     @Test
     void testMicrometerMixWithNoLabels() {
-        final String otelCounterName = "otel-counter-no-labels";
-        final String otelCounterDescription = "Description of otel-counter-no-labels";
-        final String micrometerCounterName = "micrometer-counter-no-labels";
-        final String micrometerCounterDescription = "Description of micrometer-counter-no-labels";
+        final String otelCounterName = "otel-long-no-labels";
+        final String otelCounterDescription = "Description of otel-long-no-labels";
+        final String micrometerCounterName = "micrometer-long-no-labels";
+        final String micrometerCounterDescription = "Description of micrometer-long-no-labels";
 
         // Create OTeL Counter
-        DoubleCounter otelDoubleCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
-                .doubleCounterBuilder(otelCounterName)
+        LongCounter otelLongCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
+                .longCounterBuilder(otelCounterName)
                 .setDescription(otelCounterDescription)
                 .build();
 
@@ -331,8 +331,8 @@ class DoubleCounterTest {
                 .register(OpenTelemetryMeterRegistry.INSTANCE);
 
         // Operate on counters
-        otelDoubleCounter.add(1.6, Labels.empty());
-        micrometerCounter.increment(1.8);
+        otelLongCounter.add(3, Labels.empty());
+        micrometerCounter.increment(4);
 
         // Verify meters
         List<Meter> meters = collector.getMeters();
@@ -341,9 +341,9 @@ class DoubleCounterTest {
 
         for (Meter meter : meters) {
             if (meter.getId().getName().equals(otelCounterName)) {
-                verifyMeter(meter, otelCounterName, otelCounterDescription, "1", 0, null, null, 1.6);
+                verifyMeter(meter, otelCounterName, otelCounterDescription, "1", 0, null, null, 3.0);
             } else if (meter.getId().getName().equals(micrometerCounterName)) {
-                verifyMeter(meter, micrometerCounterName, micrometerCounterDescription, "1", 0, null, null, 1.8);
+                verifyMeter(meter, micrometerCounterName, micrometerCounterDescription, "1", 0, null, null, 4.0);
             } else {
                 fail("Found a meter that shouldn't be here: " + meter.getId().getName());
             }
@@ -352,16 +352,16 @@ class DoubleCounterTest {
 
     @Test
     void testMicrometerMixWithLabels() {
-        final String otelCounterName = "otel-counter-labels";
-        final String otelCounterDescription = "Description of otel-counter-labels";
-        final String micrometerCounterName = "micrometer-counter-labels";
-        final String micrometerCounterDescription = "Description of micrometer-counter-labels";
+        final String otelCounterName = "otel-long-labels";
+        final String otelCounterDescription = "Description of otel-long-labels";
+        final String micrometerCounterName = "micrometer-long-labels";
+        final String micrometerCounterDescription = "Description of micrometer-long-labels";
         final String labelKey = "myKey";
         final String labelValue = "myValue";
 
         // Create OTeL Counter
-        DoubleCounter otelDoubleCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
-                .doubleCounterBuilder(otelCounterName)
+        LongCounter otelLongCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
+                .longCounterBuilder(otelCounterName)
                 .setDescription(otelCounterDescription)
                 .setConstantLabels(Labels.of(labelKey, labelValue))
                 .build();
@@ -374,8 +374,8 @@ class DoubleCounterTest {
                 .register(OpenTelemetryMeterRegistry.INSTANCE);
 
         // Operate on counters
-        otelDoubleCounter.add(2.3, Labels.empty());
-        micrometerCounter.increment(2.7);
+        otelLongCounter.add(2, Labels.empty());
+        micrometerCounter.increment(2);
 
         // Verify meters
         List<Meter> meters = collector.getMeters();
@@ -384,9 +384,9 @@ class DoubleCounterTest {
 
         for (Meter meter : meters) {
             if (meter.getId().getName().equals(otelCounterName)) {
-                verifyMeter(meter, otelCounterName, otelCounterDescription, "1", 1, labelKey, labelValue, 2.3);
+                verifyMeter(meter, otelCounterName, otelCounterDescription, "1", 1, labelKey, labelValue, 2.0);
             } else if (meter.getId().getName().equals(micrometerCounterName)) {
-                verifyMeter(meter, micrometerCounterName, micrometerCounterDescription, "1", 1, labelKey, labelValue, 2.7);
+                verifyMeter(meter, micrometerCounterName, micrometerCounterDescription, "1", 1, labelKey, labelValue, 2.0);
             } else {
                 fail("Found a meter that shouldn't be here: " + meter.getId().getName());
             }
@@ -395,12 +395,12 @@ class DoubleCounterTest {
 
     @Test
     void testMicrometerMixSingleMeter() {
-        final String counterName = "my-counter-only-one-no-labels";
-        final String counterDescription = "Description of my-counter-only-one-no-labels";
+        final String counterName = "long-counter-only-one-no-labels";
+        final String counterDescription = "Description of long-counter-only-one-no-labels";
 
         // Create OTeL Counter
-        DoubleCounter otelDoubleCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
-                .doubleCounterBuilder(counterName)
+        LongCounter otelLongCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
+                .longCounterBuilder(counterName)
                 .setDescription(counterDescription)
                 .build();
 
@@ -411,7 +411,7 @@ class DoubleCounterTest {
                 .register(OpenTelemetryMeterRegistry.INSTANCE);
 
         // Operate on counters
-        otelDoubleCounter.add(1, Labels.empty());
+        otelLongCounter.add(1, Labels.empty());
         micrometerCounter.increment();
 
         // Verify meters
@@ -424,14 +424,14 @@ class DoubleCounterTest {
 
     @Test
     void testMicrometerMixSingleMeterWithLabels() {
-        final String counterName = "my-counter-only-one-with-labels";
-        final String counterDescription = "Description of my-counter-only-one-with-labels";
+        final String counterName = "long-counter-only-one-with-labels";
+        final String counterDescription = "Description of long-counter-only-one-with-labels";
         final String labelKey = "myKey";
         final String labelValue = "myValue";
 
         // Create OTeL Counter
-        DoubleCounter otelDoubleCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
-                .doubleCounterBuilder(counterName)
+        LongCounter otelLongCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
+                .longCounterBuilder(counterName)
                 .setDescription(counterDescription)
                 .build();
 
@@ -443,7 +443,7 @@ class DoubleCounterTest {
                 .register(OpenTelemetryMeterRegistry.INSTANCE);
 
         // Operate on counters
-        otelDoubleCounter.add(1.3, Labels.of(labelKey, labelValue));
+        otelLongCounter.add(1, Labels.of(labelKey, labelValue));
         micrometerCounter.increment();
 
         // Verify meters
@@ -451,7 +451,7 @@ class DoubleCounterTest {
         assertThat(meters).isNotNull();
         assertThat(meters.size()).isEqualTo(1);
 
-        verifyMeter(meters.get(0), counterName, counterDescription, "1", 1, labelKey, labelValue, 2.3);
+        verifyMeter(meters.get(0), counterName, counterDescription, "1", 1, labelKey, labelValue, 2.0);
     }
 
     private void verifyMeter(Meter meterToVerify, String name, String description,

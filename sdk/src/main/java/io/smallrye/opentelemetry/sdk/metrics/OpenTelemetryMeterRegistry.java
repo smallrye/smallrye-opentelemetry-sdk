@@ -16,6 +16,7 @@ import io.opentelemetry.metrics.LongValueObserver;
 import io.opentelemetry.metrics.LongValueRecorder;
 import io.opentelemetry.metrics.Meter;
 import io.smallrye.opentelemetry.sdk.metrics.impl.DoubleCounterImpl;
+import io.smallrye.opentelemetry.sdk.metrics.impl.LongCounterImpl;
 
 public class OpenTelemetryMeterRegistry extends CompositeMeterRegistry implements Meter {
 
@@ -28,7 +29,7 @@ public class OpenTelemetryMeterRegistry extends CompositeMeterRegistry implement
 
     @Override
     public LongCounter.Builder longCounterBuilder(String name) {
-        return null;
+        return new LongCounterImpl.Builder(name);
     }
 
     @Override
