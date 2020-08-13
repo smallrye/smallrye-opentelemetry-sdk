@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>io.smallrye</groupId>
         <artifactId>smallrye-parent</artifactId>
@@ -18,6 +16,9 @@
     <url>http://smallrye.io</url>
 
     <properties>
+        <version.opentelemetry>0.7.0</version.opentelemetry>
+        <version.micrometer>1.5.3</version.micrometer>
+
         <!-- Sonar settings -->
         <sonar.projectName>SmallRye OpenTelemetry SDK</sonar.projectName>
         <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
@@ -43,11 +44,29 @@
     </scm>
 
     <modules>
+        <module>sdk</module>
     </modules>
 
     <dependencyManagement>
         <dependencies>
             <!-- Internal module dependencies -->
+            <dependency>
+                <groupId>io.smallrye.opentelemetry</groupId>
+                <artifactId>smallrye-opentelemetry-sdk</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.opentelemetry</groupId>
+                <artifactId>opentelemetry-api</artifactId>
+                <version>${version.opentelemetry}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.micrometer</groupId>
+                <artifactId>micrometer-core</artifactId>
+                <version>${version.micrometer}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
