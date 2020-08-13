@@ -1,7 +1,9 @@
 package io.smallrye.opentelemetry.sdk.metrics.utils;
 
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.ArrayList;
+import java.util.List;
 
+import io.micrometer.core.instrument.Tag;
 import io.micrometer.core.instrument.Tags;
 import io.opentelemetry.common.Labels;
 
@@ -11,8 +13,8 @@ public class LabelConverter {
     }
 
     public static Tags toTags(Labels labels) {
-        AtomicReference<Tags> tags = new AtomicReference<>(Tags.empty());
-        labels.forEach((k, v) -> tags.set(tags.get().and(k, v)));
-        return tags.get();
+        List<Tag> tags = new ArrayList<>(labels.size());
+        labels.forEach((k, v) -> tags.add(Tag.of(k, v)));
+        return Tags.of(tags);
     }
 }
