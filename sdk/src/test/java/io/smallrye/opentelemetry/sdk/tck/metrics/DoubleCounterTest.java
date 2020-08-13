@@ -114,11 +114,12 @@ class DoubleCounterTest {
                 .setDescription(counterDescription)
                 .build();
 
-        assertThrows(IllegalArgumentException.class, () -> doubleCounter.add(-2, Labels.empty()));
+        Labels labels = Labels.empty();
+        assertThrows(IllegalArgumentException.class, () -> doubleCounter.add(-2, labels));
 
         List<Meter> meters = collector.getMeters();
         assertThat(meters).isNotNull();
-        assertThat(meters.size()).isEqualTo(0);
+        assertThat(meters.size()).isZero();
     }
 
     @Test
