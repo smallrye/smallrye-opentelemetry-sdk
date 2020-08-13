@@ -1,0 +1,28 @@
+:ci: https://github.com/smallrye/smallrye-opentelemetry-sdk/actions?query=workflow%3A%22SmallRye+Build%22
+:sonar: https://sonarcloud.io/dashboard?id=smallrye_smallrye-opentelemetry-sdk
+
+image:https://github.com/smallrye/smallrye-opentelemetry-sdk/workflows/SmallRye%20Build/badge.svg?branch=main[link={ci}]
+image:https://sonarcloud.io/api/project_badges/measure?project=smallrye_smallrye-opentelemetry-sdk&metric=alert_status["Quality Gate Status", link={sonar}]
+image:https://img.shields.io/github/license/smallrye/smallrye-opentelemetry-sdk.svg["License", link="http://www.apache.org/licenses/LICENSE-2.0"]
+image:https://img.shields.io/maven-central/v/io.smallrye.opentelemetry.sdk/smallrye-opentelemetry-sdk-parent?color=green[]
+
+= SmallRye OpenTelemetry SDK
+
+The goal of this project is to provide an alternate implementation of the https://github.com/open-telemetry/opentelemetry-java/tree/master/sdk[OpenTelemetry SDK],
+that implements the https://github.com/open-telemetry/opentelemetry-java/tree/master/api[OpenTelemetry API].
+
+This project will utilize https://micrometer.io/[Micrometer] for the "heavy lifting" for metrics,
+and provide a thin wrapper to map between OpenTelemetry and Micrometer concepts.
+
+== Instructions
+
+Compile and test the project:
+
+[source,bash]
+----
+mvn verify
+----
+
+=== Contributing
+
+Please refer to our Wiki for the https://github.com/smallrye/smallrye-parent/wiki[Contribution Guidelines].
