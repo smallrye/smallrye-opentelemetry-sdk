@@ -8,7 +8,7 @@ import io.opentelemetry.OpenTelemetry;
 import io.opentelemetry.common.Labels;
 import io.opentelemetry.metrics.LongCounter;
 
-public class TestLongCounter extends AbstractTestBase {
+class TestLongCounter extends AbstractTestBase {
 
     @Test
     void testPrometheusOutputWithoutLabels() {

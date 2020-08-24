@@ -8,7 +8,7 @@ import io.opentelemetry.OpenTelemetry;
 import io.opentelemetry.common.Labels;
 import io.opentelemetry.metrics.DoubleCounter;
 
-public class TestDoubleCounter extends AbstractTestBase {
+class TestDoubleCounter extends AbstractTestBase {
 
     @Test
     void testPrometheusOutputWithoutLabels() {
