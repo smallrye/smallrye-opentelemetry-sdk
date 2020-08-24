@@ -7,35 +7,18 @@ import static org.junit.jupiter.api.Assertions.fail;
 import java.util.Iterator;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Measurement;
 import io.micrometer.core.instrument.Meter;
-import io.micrometer.core.instrument.Metrics;
 import io.micrometer.core.instrument.Statistic;
-import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
 import io.opentelemetry.OpenTelemetry;
 import io.opentelemetry.common.Labels;
 import io.opentelemetry.metrics.LongCounter;
 import io.smallrye.opentelemetry.sdk.metrics.OpenTelemetryMeterRegistry;
 
-class LongCounterTest {
-    private static SimpleMeterRegistry collector;
-
-    @BeforeAll
-    static void setupMetrics() {
-        collector = new SimpleMeterRegistry();
-        OpenTelemetryMeterRegistry.INSTANCE.add(collector);
-        Metrics.addRegistry(OpenTelemetryMeterRegistry.INSTANCE);
-    }
-
-    @BeforeEach
-    void clearMetrics() {
-        collector.clear();
-    }
+class LongCounterTest extends AbstractMetricTest {
 
     @Test
     void testWithNoLabels() {

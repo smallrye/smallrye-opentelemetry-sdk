@@ -45,6 +45,7 @@
 
     <modules>
         <module>sdk</module>
+        <module>testsuite</module>
     </modules>
 
     <dependencyManagement>
