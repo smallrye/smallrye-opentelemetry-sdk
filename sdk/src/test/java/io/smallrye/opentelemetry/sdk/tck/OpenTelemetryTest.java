@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import io.grpc.Context;
 import io.opentelemetry.OpenTelemetry;
 import io.opentelemetry.context.propagation.ContextPropagators;
-import io.opentelemetry.context.propagation.HttpTextFormat;
+import io.opentelemetry.context.propagation.TextMapPropagator;
 
 class OpenTelemetryTest {
 
@@ -17,27 +17,27 @@ class OpenTelemetryTest {
     void testDefaultPropagator() {
         ContextPropagators contextPropagators = OpenTelemetry.getPropagators();
         assertThat(contextPropagators).isNotNull();
-        assertThat(contextPropagators.getHttpTextFormat()).isNotNull();
-        assertThat(contextPropagators.getHttpTextFormat()).isInstanceOf(HttpTextFormat.class);
+        assertThat(contextPropagators.getTextMapPropagator()).isNotNull();
+        assertThat(contextPropagators.getTextMapPropagator()).isInstanceOf(TextMapPropagator.class);
     }
 
     @Test
     void testCustomPropagator() {
         OpenTelemetry.setPropagators(new ContextPropagators() {
             @Override
-            public HttpTextFormat getHttpTextFormat() {
-                return new CustomHttpTextFormat();
+            public TextMapPropagator getTextMapPropagator() {
+                return new CustomTextMapPropagator();
             }
         });
 
         ContextPropagators contextPropagators = OpenTelemetry.getPropagators();
         assertThat(contextPropagators).isNotNull();
-        assertThat(contextPropagators.getHttpTextFormat()).isNotNull();
-        assertThat(contextPropagators.getHttpTextFormat()).isInstanceOf(HttpTextFormat.class);
-        assertThat(contextPropagators.getHttpTextFormat()).isInstanceOf(CustomHttpTextFormat.class);
+        assertThat(contextPropagators.getTextMapPropagator()).isNotNull();
+        assertThat(contextPropagators.getTextMapPropagator()).isInstanceOf(TextMapPropagator.class);
+        assertThat(contextPropagators.getTextMapPropagator()).isInstanceOf(CustomTextMapPropagator.class);
     }
 
-    static class CustomHttpTextFormat implements HttpTextFormat {
+    static class CustomTextMapPropagator implements TextMapPropagator {
         @Override
         public List<String> fields() {
             return null;
