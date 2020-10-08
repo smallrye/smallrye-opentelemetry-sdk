@@ -73,12 +73,6 @@ public class LongCounterImpl implements LongCounter, LongCounter.BoundLongCounte
             return this;
         }
 
-        @Override
-        public LongCounter.Builder setConstantLabels(Labels constantLabels) {
-            this.labels = Objects.requireNonNull(constantLabels);
-            return this;
-        }
-
         private Meter.Id constructMeterId() {
             return new Meter.Id(name, LabelConverter.toTags(labels), baseUnit, description, Meter.Type.COUNTER);
         }

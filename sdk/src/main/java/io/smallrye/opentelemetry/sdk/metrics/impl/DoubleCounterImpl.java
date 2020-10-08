@@ -73,12 +73,6 @@ public class DoubleCounterImpl implements DoubleCounter, DoubleCounter.BoundDoub
             return this;
         }
 
-        @Override
-        public DoubleCounter.Builder setConstantLabels(Labels constantLabels) {
-            this.labels = Objects.requireNonNull(constantLabels);
-            return this;
-        }
-
         private Meter.Id constructMeterId() {
             return new Meter.Id(name, LabelConverter.toTags(labels), baseUnit, description, Meter.Type.COUNTER);
         }
