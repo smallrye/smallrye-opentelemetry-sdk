@@ -13,9 +13,9 @@ import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Measurement;
 import io.micrometer.core.instrument.Meter;
 import io.micrometer.core.instrument.Statistic;
-import io.opentelemetry.OpenTelemetry;
-import io.opentelemetry.common.Labels;
-import io.opentelemetry.metrics.DoubleCounter;
+import io.opentelemetry.api.OpenTelemetry;
+import io.opentelemetry.api.common.Labels;
+import io.opentelemetry.api.metrics.DoubleCounter;
 import io.smallrye.opentelemetry.sdk.metrics.OpenTelemetryMeterRegistry;
 
 class DoubleCounterTest extends AbstractMetricTest {
@@ -25,7 +25,7 @@ class DoubleCounterTest extends AbstractMetricTest {
         final String counterName = "my-counter-no-labels";
         final String counterDescription = "Description of my-counter-no-labels";
 
-        DoubleCounter doubleCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
+        DoubleCounter doubleCounter = OpenTelemetry.getGlobalMeter("io.smallrye.opentelemetry.sdk")
                 .doubleCounterBuilder(counterName)
                 .setDescription(counterDescription)
                 .build();
@@ -44,7 +44,7 @@ class DoubleCounterTest extends AbstractMetricTest {
         final String counterName = "my-counter-unit";
         final String counterDescription = "Description of my-counter-unit";
 
-        DoubleCounter doubleCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
+        DoubleCounter doubleCounter = OpenTelemetry.getGlobalMeter("io.smallrye.opentelemetry.sdk")
                 .doubleCounterBuilder(counterName)
                 .setDescription(counterDescription)
                 .setUnit("2")
@@ -64,7 +64,7 @@ class DoubleCounterTest extends AbstractMetricTest {
         final String counterName = "my-counter-fail";
         final String counterDescription = "Description of my-counter-fail";
 
-        DoubleCounter doubleCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
+        DoubleCounter doubleCounter = OpenTelemetry.getGlobalMeter("io.smallrye.opentelemetry.sdk")
                 .doubleCounterBuilder(counterName)
                 .setDescription(counterDescription)
                 .build();
@@ -84,7 +84,7 @@ class DoubleCounterTest extends AbstractMetricTest {
         final String labelKey = "myKey";
         final String labelValue = "myValue";
 
-        DoubleCounter doubleCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
+        DoubleCounter doubleCounter = OpenTelemetry.getGlobalMeter("io.smallrye.opentelemetry.sdk")
                 .doubleCounterBuilder(counterName)
                 .setDescription(counterDescription)
                 .build();
@@ -103,7 +103,7 @@ class DoubleCounterTest extends AbstractMetricTest {
         final String counterName = "my-counter-multi-increment-no-labels";
         final String counterDescription = "Description of my-counter-multi-increment-no-labels";
 
-        DoubleCounter doubleCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
+        DoubleCounter doubleCounter = OpenTelemetry.getGlobalMeter("io.smallrye.opentelemetry.sdk")
                 .doubleCounterBuilder(counterName)
                 .setDescription(counterDescription)
                 .build();
@@ -132,7 +132,7 @@ class DoubleCounterTest extends AbstractMetricTest {
         final String labelKey = "myKey";
         final String labelValue = "myValue";
 
-        DoubleCounter doubleCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
+        DoubleCounter doubleCounter = OpenTelemetry.getGlobalMeter("io.smallrye.opentelemetry.sdk")
                 .doubleCounterBuilder(counterName)
                 .setDescription(counterDescription)
                 .build();
@@ -156,7 +156,7 @@ class DoubleCounterTest extends AbstractMetricTest {
         final String micrometerCounterDescription = "Description of micrometer-counter-no-labels";
 
         // Create OTeL Counter
-        DoubleCounter otelDoubleCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
+        DoubleCounter otelDoubleCounter = OpenTelemetry.getGlobalMeter("io.smallrye.opentelemetry.sdk")
                 .doubleCounterBuilder(otelCounterName)
                 .setDescription(otelCounterDescription)
                 .build();
@@ -197,7 +197,7 @@ class DoubleCounterTest extends AbstractMetricTest {
         final String labelValue = "myValue";
 
         // Create OTeL Counter
-        DoubleCounter otelDoubleCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
+        DoubleCounter otelDoubleCounter = OpenTelemetry.getGlobalMeter("io.smallrye.opentelemetry.sdk")
                 .doubleCounterBuilder(otelCounterName)
                 .setDescription(otelCounterDescription)
                 .build();
@@ -235,7 +235,7 @@ class DoubleCounterTest extends AbstractMetricTest {
         final String counterDescription = "Description of my-counter-only-one-no-labels";
 
         // Create OTeL Counter
-        DoubleCounter otelDoubleCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
+        DoubleCounter otelDoubleCounter = OpenTelemetry.getGlobalMeter("io.smallrye.opentelemetry.sdk")
                 .doubleCounterBuilder(counterName)
                 .setDescription(counterDescription)
                 .build();
@@ -266,7 +266,7 @@ class DoubleCounterTest extends AbstractMetricTest {
         final String labelValue = "myValue";
 
         // Create OTeL Counter
-        DoubleCounter otelDoubleCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
+        DoubleCounter otelDoubleCounter = OpenTelemetry.getGlobalMeter("io.smallrye.opentelemetry.sdk")
                 .doubleCounterBuilder(counterName)
                 .setDescription(counterDescription)
                 .build();

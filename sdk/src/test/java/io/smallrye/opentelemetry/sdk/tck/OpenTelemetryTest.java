@@ -6,8 +6,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import io.grpc.Context;
-import io.opentelemetry.OpenTelemetry;
+import io.opentelemetry.api.OpenTelemetry;
+import io.opentelemetry.context.Context;
 import io.opentelemetry.context.propagation.ContextPropagators;
 import io.opentelemetry.context.propagation.TextMapPropagator;
 
@@ -15,7 +15,7 @@ class OpenTelemetryTest {
 
     @Test
     void testDefaultPropagator() {
-        ContextPropagators contextPropagators = OpenTelemetry.getPropagators();
+        ContextPropagators contextPropagators = OpenTelemetry.getGlobalPropagators();
         assertThat(contextPropagators).isNotNull();
         assertThat(contextPropagators.getTextMapPropagator()).isNotNull();
         assertThat(contextPropagators.getTextMapPropagator()).isInstanceOf(TextMapPropagator.class);
@@ -23,14 +23,14 @@ class OpenTelemetryTest {
 
     @Test
     void testCustomPropagator() {
-        OpenTelemetry.setPropagators(new ContextPropagators() {
+        OpenTelemetry.setGlobalPropagators(new ContextPropagators() {
             @Override
             public TextMapPropagator getTextMapPropagator() {
                 return new CustomTextMapPropagator();
             }
         });
 
-        ContextPropagators contextPropagators = OpenTelemetry.getPropagators();
+        ContextPropagators contextPropagators = OpenTelemetry.getGlobalPropagators();
         assertThat(contextPropagators).isNotNull();
         assertThat(contextPropagators.getTextMapPropagator()).isNotNull();
         assertThat(contextPropagators.getTextMapPropagator()).isInstanceOf(TextMapPropagator.class);

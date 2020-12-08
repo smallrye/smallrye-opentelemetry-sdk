@@ -2,17 +2,15 @@ package io.smallrye.opentelemetry.sdk.tck.tracing;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import io.opentelemetry.OpenTelemetry;
-import io.opentelemetry.trace.DefaultTracerProvider;
-import io.opentelemetry.trace.TracerProvider;
+import io.opentelemetry.api.OpenTelemetry;
+import io.opentelemetry.api.trace.TracerProvider;
 
 class OpenTelemetryTracingTest {
 
     //TODO Uncomment when tracer present
     //    @Test
     void testTracerProviderLookup() {
-        TracerProvider tracerProvider = OpenTelemetry.getTracerProvider();
+        TracerProvider tracerProvider = OpenTelemetry.getGlobalTracerProvider();
         assertThat(tracerProvider).isNotNull();
-        assertThat(tracerProvider).isNotInstanceOf(DefaultTracerProvider.class);
     }
 }

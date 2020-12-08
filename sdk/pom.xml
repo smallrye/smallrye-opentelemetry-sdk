@@ -10,7 +10,7 @@
   </parent>
 
   <artifactId>smallrye-opentelemetry-sdk</artifactId>
-  <description>SmallRye OpenTelemetry SDK implementation</description>
+  <name>SmallRye OpenTelemetry SDK: Implementation</name>
 
   <dependencies>
     <dependency>
@@ -20,6 +20,11 @@
     <dependency>
       <groupId>io.micrometer</groupId>
       <artifactId>micrometer-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.opentelemetry</groupId>
+      <artifactId>opentelemetry-sdk-trace</artifactId>
+      <version>${version.opentelemetry}</version>
     </dependency>
 
     <dependency>

@@ -4,22 +4,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-import io.opentelemetry.OpenTelemetry;
-import io.opentelemetry.common.Labels;
-import io.opentelemetry.metrics.DoubleCounter;
+import io.opentelemetry.api.OpenTelemetry;
+import io.opentelemetry.api.common.Labels;
+import io.opentelemetry.api.metrics.DoubleCounter;
 
 class TestDoubleCounter extends AbstractTestBase {
 
     @Test
     void testPrometheusOutputWithoutLabels() {
-        DoubleCounter doubleCounter = OpenTelemetry.getMeter("nonsense-value")
+        DoubleCounter doubleCounter = OpenTelemetry.getGlobalMeter("nonsense-value")
                 .doubleCounterBuilder("doubleCounter")
                 .setDescription("This is my first counter")
                 .build();
 
         doubleCounter.add(2, Labels.empty());
 
-        DoubleCounter anotherCounter = OpenTelemetry.getMeter("nonsense-value")
+        DoubleCounter anotherCounter = OpenTelemetry.getGlobalMeter("nonsense-value")
                 .doubleCounterBuilder("anotherDoubleCounter")
                 .setDescription("This is another counter")
                 .build();
@@ -40,14 +40,14 @@ class TestDoubleCounter extends AbstractTestBase {
 
     @Test
     void testPrometheusOutputWithLabels() {
-        DoubleCounter doubleCounter = OpenTelemetry.getMeter("nonsense-value")
+        DoubleCounter doubleCounter = OpenTelemetry.getGlobalMeter("nonsense-value")
                 .doubleCounterBuilder("doubleCounterLabels")
                 .setDescription("This is my first counter with Labels")
                 .build();
 
         doubleCounter.add(4, Labels.of("myKey", "aValue"));
 
-        DoubleCounter anotherCounter = OpenTelemetry.getMeter("nonsense-value")
+        DoubleCounter anotherCounter = OpenTelemetry.getGlobalMeter("nonsense-value")
                 .doubleCounterBuilder("anotherDoubleCounterLabels")
                 .setDescription("This is another counter with Labels")
                 .build();

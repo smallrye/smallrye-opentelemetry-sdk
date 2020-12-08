@@ -5,7 +5,7 @@ import java.util.List;
 
 import io.micrometer.core.instrument.Tag;
 import io.micrometer.core.instrument.Tags;
-import io.opentelemetry.common.Labels;
+import io.opentelemetry.api.common.Labels;
 
 public class LabelConverter {
     private LabelConverter() {

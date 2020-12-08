@@ -4,22 +4,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-import io.opentelemetry.OpenTelemetry;
-import io.opentelemetry.common.Labels;
-import io.opentelemetry.metrics.LongCounter;
+import io.opentelemetry.api.OpenTelemetry;
+import io.opentelemetry.api.common.Labels;
+import io.opentelemetry.api.metrics.LongCounter;
 
 class TestLongCounter extends AbstractTestBase {
 
     @Test
     void testPrometheusOutputWithoutLabels() {
-        LongCounter longCounter = OpenTelemetry.getMeter("nonsense-value")
+        LongCounter longCounter = OpenTelemetry.getGlobalMeter("nonsense-value")
                 .longCounterBuilder("longCounter")
                 .setDescription("This is my long counter")
                 .build();
 
         longCounter.add(2, Labels.empty());
 
-        LongCounter anotherCounter = OpenTelemetry.getMeter("nonsense-value")
+        LongCounter anotherCounter = OpenTelemetry.getGlobalMeter("nonsense-value")
                 .longCounterBuilder("anotherLongCounter")
                 .setDescription("This is another counter for longs")
                 .build();
@@ -40,14 +40,14 @@ class TestLongCounter extends AbstractTestBase {
 
     @Test
     void testPrometheusOutputWithLabels() {
-        LongCounter longCounter = OpenTelemetry.getMeter("nonsense-value")
+        LongCounter longCounter = OpenTelemetry.getGlobalMeter("nonsense-value")
                 .longCounterBuilder("longCounterLabels")
                 .setDescription("This is my long counter with labels")
                 .build();
 
         longCounter.add(4, Labels.of("myKey", "aValue"));
 
-        LongCounter anotherCounter = OpenTelemetry.getMeter("nonsense-value")
+        LongCounter anotherCounter = OpenTelemetry.getGlobalMeter("nonsense-value")
                 .longCounterBuilder("anotherLongCounterLabels")
                 .setDescription("This is another counter for longs with labels")
                 .build();

@@ -13,9 +13,9 @@ import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Measurement;
 import io.micrometer.core.instrument.Meter;
 import io.micrometer.core.instrument.Statistic;
-import io.opentelemetry.OpenTelemetry;
-import io.opentelemetry.common.Labels;
-import io.opentelemetry.metrics.LongCounter;
+import io.opentelemetry.api.OpenTelemetry;
+import io.opentelemetry.api.common.Labels;
+import io.opentelemetry.api.metrics.LongCounter;
 import io.smallrye.opentelemetry.sdk.metrics.OpenTelemetryMeterRegistry;
 
 class LongCounterTest extends AbstractMetricTest {
@@ -25,7 +25,7 @@ class LongCounterTest extends AbstractMetricTest {
         final String counterName = "long-counter-no-labels";
         final String counterDescription = "Description of long-counter-no-labels";
 
-        LongCounter longCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
+        LongCounter longCounter = OpenTelemetry.getGlobalMeter("io.smallrye.opentelemetry.sdk")
                 .longCounterBuilder(counterName)
                 .setDescription(counterDescription)
                 .build();
@@ -44,7 +44,7 @@ class LongCounterTest extends AbstractMetricTest {
         final String counterName = "long-counter-unit";
         final String counterDescription = "Description of long-counter-unit";
 
-        LongCounter longCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
+        LongCounter longCounter = OpenTelemetry.getGlobalMeter("io.smallrye.opentelemetry.sdk")
                 .longCounterBuilder(counterName)
                 .setDescription(counterDescription)
                 .setUnit("2")
@@ -64,7 +64,7 @@ class LongCounterTest extends AbstractMetricTest {
         final String counterName = "long-counter-fail";
         final String counterDescription = "Description of long-counter-fail";
 
-        LongCounter longCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
+        LongCounter longCounter = OpenTelemetry.getGlobalMeter("io.smallrye.opentelemetry.sdk")
                 .longCounterBuilder(counterName)
                 .setDescription(counterDescription)
                 .build();
@@ -84,7 +84,7 @@ class LongCounterTest extends AbstractMetricTest {
         final String labelKey = "myKey";
         final String labelValue = "myValue";
 
-        LongCounter longCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
+        LongCounter longCounter = OpenTelemetry.getGlobalMeter("io.smallrye.opentelemetry.sdk")
                 .longCounterBuilder(counterName)
                 .setDescription(counterDescription)
                 .build();
@@ -103,7 +103,7 @@ class LongCounterTest extends AbstractMetricTest {
         final String counterName = "long-counter-multi-increment-no-labels";
         final String counterDescription = "Description of long-counter-multi-increment-no-labels";
 
-        LongCounter longCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
+        LongCounter longCounter = OpenTelemetry.getGlobalMeter("io.smallrye.opentelemetry.sdk")
                 .longCounterBuilder(counterName)
                 .setDescription(counterDescription)
                 .build();
@@ -132,7 +132,7 @@ class LongCounterTest extends AbstractMetricTest {
         final String labelKey = "myKey";
         final String labelValue = "myValue";
 
-        LongCounter longCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
+        LongCounter longCounter = OpenTelemetry.getGlobalMeter("io.smallrye.opentelemetry.sdk")
                 .longCounterBuilder(counterName)
                 .setDescription(counterDescription)
                 .build();
@@ -156,7 +156,7 @@ class LongCounterTest extends AbstractMetricTest {
         final String micrometerCounterDescription = "Description of micrometer-long-no-labels";
 
         // Create OTeL Counter
-        LongCounter otelLongCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
+        LongCounter otelLongCounter = OpenTelemetry.getGlobalMeter("io.smallrye.opentelemetry.sdk")
                 .longCounterBuilder(otelCounterName)
                 .setDescription(otelCounterDescription)
                 .build();
@@ -197,7 +197,7 @@ class LongCounterTest extends AbstractMetricTest {
         final String labelValue = "myValue";
 
         // Create OTeL Counter
-        LongCounter otelLongCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
+        LongCounter otelLongCounter = OpenTelemetry.getGlobalMeter("io.smallrye.opentelemetry.sdk")
                 .longCounterBuilder(otelCounterName)
                 .setDescription(otelCounterDescription)
                 .build();
@@ -235,7 +235,7 @@ class LongCounterTest extends AbstractMetricTest {
         final String counterDescription = "Description of long-counter-only-one-no-labels";
 
         // Create OTeL Counter
-        LongCounter otelLongCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
+        LongCounter otelLongCounter = OpenTelemetry.getGlobalMeter("io.smallrye.opentelemetry.sdk")
                 .longCounterBuilder(counterName)
                 .setDescription(counterDescription)
                 .build();
@@ -266,7 +266,7 @@ class LongCounterTest extends AbstractMetricTest {
         final String labelValue = "myValue";
 
         // Create OTeL Counter
-        LongCounter otelLongCounter = OpenTelemetry.getMeter("io.smallrye.opentelemetry.sdk")
+        LongCounter otelLongCounter = OpenTelemetry.getGlobalMeter("io.smallrye.opentelemetry.sdk")
                 .longCounterBuilder(counterName)
                 .setDescription(counterDescription)
                 .build();

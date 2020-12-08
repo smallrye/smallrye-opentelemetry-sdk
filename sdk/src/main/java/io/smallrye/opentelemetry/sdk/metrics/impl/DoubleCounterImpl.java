@@ -4,8 +4,8 @@ import java.util.Objects;
 
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Meter;
-import io.opentelemetry.common.Labels;
-import io.opentelemetry.metrics.DoubleCounter;
+import io.opentelemetry.api.common.Labels;
+import io.opentelemetry.api.metrics.DoubleCounter;
 import io.smallrye.opentelemetry.sdk.metrics.OpenTelemetryMeterRegistry;
 import io.smallrye.opentelemetry.sdk.metrics.utils.LabelConverter;
 

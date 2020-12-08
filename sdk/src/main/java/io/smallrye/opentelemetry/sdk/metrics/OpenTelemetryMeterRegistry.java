@@ -1,20 +1,20 @@
 package io.smallrye.opentelemetry.sdk.metrics;
 
 import io.micrometer.core.instrument.composite.CompositeMeterRegistry;
-import io.opentelemetry.metrics.BatchRecorder;
-import io.opentelemetry.metrics.DoubleCounter;
-import io.opentelemetry.metrics.DoubleSumObserver;
-import io.opentelemetry.metrics.DoubleUpDownCounter;
-import io.opentelemetry.metrics.DoubleUpDownSumObserver;
-import io.opentelemetry.metrics.DoubleValueObserver;
-import io.opentelemetry.metrics.DoubleValueRecorder;
-import io.opentelemetry.metrics.LongCounter;
-import io.opentelemetry.metrics.LongSumObserver;
-import io.opentelemetry.metrics.LongUpDownCounter;
-import io.opentelemetry.metrics.LongUpDownSumObserver;
-import io.opentelemetry.metrics.LongValueObserver;
-import io.opentelemetry.metrics.LongValueRecorder;
-import io.opentelemetry.metrics.Meter;
+import io.opentelemetry.api.metrics.BatchRecorder;
+import io.opentelemetry.api.metrics.DoubleCounter;
+import io.opentelemetry.api.metrics.DoubleSumObserver;
+import io.opentelemetry.api.metrics.DoubleUpDownCounter;
+import io.opentelemetry.api.metrics.DoubleUpDownSumObserver;
+import io.opentelemetry.api.metrics.DoubleValueObserver;
+import io.opentelemetry.api.metrics.DoubleValueRecorder;
+import io.opentelemetry.api.metrics.LongCounter;
+import io.opentelemetry.api.metrics.LongSumObserver;
+import io.opentelemetry.api.metrics.LongUpDownCounter;
+import io.opentelemetry.api.metrics.LongUpDownSumObserver;
+import io.opentelemetry.api.metrics.LongValueObserver;
+import io.opentelemetry.api.metrics.LongValueRecorder;
+import io.opentelemetry.api.metrics.Meter;
 import io.smallrye.opentelemetry.sdk.metrics.impl.DoubleCounterImpl;
 import io.smallrye.opentelemetry.sdk.metrics.impl.LongCounterImpl;
 
