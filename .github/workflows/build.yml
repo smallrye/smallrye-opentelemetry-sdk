@@ -5,6 +5,7 @@ on:
     branches: 
       - main
     paths-ignore:
+      - '.github/**'
       - '.gitignore'
       - 'CODEOWNERS'
       - 'LICENSE'
@@ -12,6 +13,7 @@ on:
       - 'README*'
   pull_request:
     paths-ignore:
+      - '.github/**'
       - '.gitignore'
       - 'CODEOWNERS'
       - 'LICENSE'
@@ -24,19 +26,20 @@ jobs:
     strategy:
       matrix:
         java: [8, 11, 14]
-    name: build with jdk ${{matrix.java}}
+    name: Build with jdk ${{matrix.java}}
 
     steps:
       - uses: actions/checkout@v2
         name: checkout
 
-      - uses: actions/setup-java@v1.3.0
+      - uses: AdoptOpenJDK/install-jdk@v1
         name: set up jdk ${{matrix.java}}
         with:
-          java-version: ${{matrix.java}}
+          version: ${{matrix.java}}
+          source: 'releases'
 
-      - name: build with maven
-        run: mvn -B formatter:validate verify --file pom.xml
+      - name: Build with maven
+        run: mvn -B clean formatter:validate verify --file pom.xml
 
   quality:
     needs: [build]
@@ -48,12 +51,13 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - uses: actions/setup-java@v1.3.0
+      - uses: AdoptOpenJDK/install-jdk@v1
         with:
           java-version: 11
+          source: 'releases'
 
-      - name: sonar
+      - name: Coverage and Sonar
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
-        run: mvn -B verify --file pom.xml -Pcoverage javadoc:javadoc sonar:sonar -Dsonar.projectKey=smallrye_smallrye-opentelemetry-sdk -Dsonar.login=$SONAR_TOKEN
+        run: mvn -B clean verify --file pom.xml -Pcoverage javadoc:javadoc sonar:sonar -Dsonar.projectKey=smallrye_smallrye-opentelemetry-sdk -Dsonar.login=$SONAR_TOKEN
