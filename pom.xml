@@ -16,7 +16,7 @@
     <url>http://smallrye.io</url>
 
     <properties>
-        <version.opentelemetry>0.12.0</version.opentelemetry>
+        <version.opentelemetry>1.0.1</version.opentelemetry>
         <version.micrometer>1.6.5</version.micrometer>
 
         <!-- Sonar settings -->
