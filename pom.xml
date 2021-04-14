@@ -17,7 +17,7 @@
 
     <properties>
         <version.opentelemetry>0.12.0</version.opentelemetry>
-        <version.micrometer>1.6.5</version.micrometer>
+        <version.micrometer>1.6.6</version.micrometer>
 
         <!-- Sonar settings -->
         <sonar.projectName>SmallRye OpenTelemetry SDK</sonar.projectName>
