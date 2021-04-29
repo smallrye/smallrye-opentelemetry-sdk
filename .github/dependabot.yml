@@ -1,0 +1,14 @@
+version: 2
+updates:
+- package-ecosystem: maven
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: io.opentelemetry:opentelemetry-sdk-trace
+    versions:
+    - 1.0.1
+  - dependency-name: io.opentelemetry:opentelemetry-api
+    versions:
+    - 1.0.1
